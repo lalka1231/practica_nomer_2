@@ -12,7 +12,6 @@ import (
 )
 
 type Training struct {
-	// TODO: добавить поля
 	Steps        int
 	TrainingType string
 	Duration     time.Duration
@@ -20,21 +19,28 @@ type Training struct {
 }
 
 func (t *Training) Parse(datastring string) (err error) {
-	// TODO: реализовать функцию
 	parts := strings.Split(datastring, ",")
 	if len(parts) != 3 {
 		return errors.New("неверный формат строки")
 	}
+
 	steps, err := strconv.Atoi(parts[0])
 	if err != nil {
 		return err
 	}
+	if steps <= 0 {
+		return errors.New("количество шагов должно быть положительным")
+	}
 	t.Steps = steps
 
 	t.TrainingType = parts[1]
+
 	duration, err := time.ParseDuration(parts[2])
 	if err != nil {
 		return err
+	}
+	if duration <= 0 {
+		return errors.New("длительность должна быть положительной")
 	}
 	t.Duration = duration
 

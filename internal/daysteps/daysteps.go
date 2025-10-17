@@ -19,7 +19,6 @@ type DaySteps struct {
 }
 
 func (ds *DaySteps) Parse(datastring string) (err error) {
-	// TODO: реализовать функцию
 	parts := strings.Split(datastring, ",")
 	if len(parts) != 2 {
 		return errors.New("неверный формат строки")
@@ -28,9 +27,15 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 	if err != nil {
 		return err
 	}
+	if steps <= 0 {
+		return errors.New("количество шагов должно быть положительным")
+	}
 	duration, err := time.ParseDuration(parts[1])
 	if err != nil {
 		return err
+	}
+	if duration <= 0 {
+		return errors.New("длительность должна быть положительной")
 	}
 	ds.Duration = duration
 	ds.Steps = steps
