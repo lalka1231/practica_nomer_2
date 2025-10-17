@@ -3,6 +3,8 @@ package trainings
 import (
 	"errors"
 	"fmt"
+	"strconv"
+	"strings"
 	"time"
 
 	"github.com/Yandex-Practicum/tracker/internal/personaldata"
@@ -14,6 +16,35 @@ type Training struct {
 	TrainingType string
 	Duration     time.Duration
 	personaldata.Personal
+}
+
+func (t *Training) Parse(datastring string) (err error) {
+	parts := strings.Split(datastring, ",")
+	if len(parts) != 3 {
+		return errors.New("неверный формат строки")
+	}
+
+	steps, err := strconv.Atoi(parts[0])
+	if err != nil {
+		return err
+	}
+	if steps <= 0 {
+		return errors.New("количество шагов должно быть положительным")
+	}
+	t.Steps = steps
+
+	t.TrainingType = parts[1]
+
+	duration, err := time.ParseDuration(parts[2])
+	if err != nil {
+		return err
+	}
+	if duration <= 0 {
+		return errors.New("длительность должна быть положительной")
+	}
+	t.Duration = duration
+
+	return nil
 }
 
 func (t Training) ActionInfo() (string, error) {

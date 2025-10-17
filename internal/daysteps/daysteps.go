@@ -12,7 +12,6 @@ import (
 )
 
 type DaySteps struct {
-	// TODO: добавить поля
 	Steps    int
 	Duration time.Duration
 	personaldata.Personal
@@ -43,15 +42,14 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 }
 
 func (ds DaySteps) ActionInfo() (string, error) {
-	// TODO: реализовать функцию
 	dist := spentenergy.Distance(ds.Steps, ds.Height)
 	calories, err := spentenergy.WalkingSpentCalories(ds.Steps, ds.Weight, ds.Height, ds.Duration)
 	if err != nil {
 		return "", err
-
 	}
+
 	result := fmt.Sprintf(
-		"Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.",
+		"Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n",
 		ds.Steps,
 		dist,
 		calories,
