@@ -8,7 +8,6 @@ type DataParser interface {
 }
 
 func Info(dataset []string, dp DataParser) {
-	// TODO: реализовать функцию
 	for i := range dataset {
 		err := dp.Parse(dataset[i])
 		if err != nil {
