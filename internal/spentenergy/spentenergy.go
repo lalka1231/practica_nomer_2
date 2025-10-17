@@ -18,8 +18,10 @@ func WalkingSpentCalories(steps int, weight, height float64, duration time.Durat
 		return 0, errors.New("некорректные параметры")
 	}
 	meanSpeed := MeanSpeed(steps, height, duration)
-	durationInMinutes := duration.Minutes()
-	calories := (weight * meanSpeed * walkingCaloriesCoefficient * durationInMinutes) / minInH
+	durationInHours := duration.Hours()
+
+	met := 2.5
+	calories := met * weight * durationInHours * walkingCaloriesCoefficient
 	return calories, nil
 }
 
@@ -28,8 +30,10 @@ func RunningSpentCalories(steps int, weight, height float64, duration time.Durat
 		return 0, errors.New("некорректные параметры")
 	}
 	meanSpeed := MeanSpeed(steps, height, duration)
-	durationInMinutes := duration.Minutes()
-	calories := (weight * meanSpeed * durationInMinutes) / minInH
+	durationInHours := duration.Hours()
+
+	met := 8.0
+	calories := met * weight * durationInHours
 	return calories, nil
 }
 
